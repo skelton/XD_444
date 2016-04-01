@@ -1,1 +1,0 @@
-cmd_drivers/iio/common/hid-sensors/built-in.o :=  rm -f drivers/iio/common/hid-sensors/built-in.o; ../prebuilts/gcc/linux-x86/arm/arm-eabi-4.6/bin/arm-eabi-ar rcsD drivers/iio/common/hid-sensors/built-in.o

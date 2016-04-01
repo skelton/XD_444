@@ -1,1 +1,0 @@
-cmd_drivers/staging/android/fiq_debugger/built-in.o :=  ../prebuilts/gcc/linux-x86/arm/arm-eabi-4.6/bin/arm-eabi-ld -EL    -r -o drivers/staging/android/fiq_debugger/built-in.o drivers/staging/android/fiq_debugger/fiq_debugger.o drivers/staging/android/fiq_debugger/fiq_debugger_arm.o ; scripts/mod/modpost drivers/staging/android/fiq_debugger/built-in.o

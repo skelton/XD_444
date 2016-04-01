@@ -1,1 +1,0 @@
-cmd_drivers/softwin/built-in.o :=  ../prebuilts/gcc/linux-x86/arm/arm-eabi-4.6/bin/arm-eabi-ld -EL    -r -o drivers/softwin/built-in.o drivers/softwin/softwin_led.o ; scripts/mod/modpost drivers/softwin/built-in.o

@@ -1,1 +1,0 @@
-cmd_drivers/net/usb/asix.o := ../prebuilts/gcc/linux-x86/arm/arm-eabi-4.6/bin/arm-eabi-ld -EL    -r -o drivers/net/usb/asix.o drivers/net/usb/asix_devices.o drivers/net/usb/asix_common.o drivers/net/usb/ax88172a.o ; scripts/mod/modpost drivers/net/usb/asix.o

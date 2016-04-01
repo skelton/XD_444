@@ -1,1 +1,0 @@
-cmd_drivers/video/rockchip/hdmi/chips/rk3036/built-in.o :=  ../prebuilts/gcc/linux-x86/arm/arm-eabi-4.6/bin/arm-eabi-ld -EL    -r -o drivers/video/rockchip/hdmi/chips/rk3036/built-in.o drivers/video/rockchip/hdmi/chips/rk3036/rk3036_hdmi_hw.o drivers/video/rockchip/hdmi/chips/rk3036/rk3036_hdmi.o ; scripts/mod/modpost drivers/video/rockchip/hdmi/chips/rk3036/built-in.o

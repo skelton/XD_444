@@ -1,1 +1,0 @@
-cmd_drivers/video/rockchip/rga2/rga2.o := ../prebuilts/gcc/linux-x86/arm/arm-eabi-4.6/bin/arm-eabi-ld -EL    -r -o drivers/video/rockchip/rga2/rga2.o drivers/video/rockchip/rga2/rga2_drv.o drivers/video/rockchip/rga2/rga2_mmu_info.o drivers/video/rockchip/rga2/rga2_reg_info.o drivers/video/rockchip/rga2/RGA2_API.o ; scripts/mod/modpost drivers/video/rockchip/rga2/rga2.o

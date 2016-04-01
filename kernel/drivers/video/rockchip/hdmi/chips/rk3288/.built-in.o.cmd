@@ -1,1 +1,0 @@
-cmd_drivers/video/rockchip/hdmi/chips/rk3288/built-in.o :=  ../prebuilts/gcc/linux-x86/arm/arm-eabi-4.6/bin/arm-eabi-ld -EL    -r -o drivers/video/rockchip/hdmi/chips/rk3288/built-in.o drivers/video/rockchip/hdmi/chips/rk3288/rk3288_hdmi_hw.o drivers/video/rockchip/hdmi/chips/rk3288/rk3288_hdmi.o ; scripts/mod/modpost drivers/video/rockchip/hdmi/chips/rk3288/built-in.o

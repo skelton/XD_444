@@ -1,1 +1,0 @@
-cmd_drivers/spi/built-in.o :=  ../prebuilts/gcc/linux-x86/arm/arm-eabi-4.6/bin/arm-eabi-ld -EL    -r -o drivers/spi/built-in.o drivers/spi/spi.o drivers/spi/spi-rockchip-core.o drivers/spi/spi-rockchip-dma.o drivers/spi/spi-rockchip.o drivers/spi/spi-rockchip-test.o ; scripts/mod/modpost drivers/spi/built-in.o

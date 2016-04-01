@@ -1,1 +1,0 @@
-cmd_drivers/input/soc/built-in.o :=  ../prebuilts/gcc/linux-x86/arm/arm-eabi-4.6/bin/arm-eabi-ld -EL    -r -o drivers/input/soc/built-in.o drivers/input/soc/soc-adc.o drivers/input/soc/adc_js.o drivers/input/soc/encrytion.o drivers/input/soc/ota.o ; scripts/mod/modpost drivers/input/soc/built-in.o

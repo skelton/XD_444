@@ -1,1 +1,0 @@
-cmd_sound/soc/rockchip/snd-soc-rt3224.o := ../prebuilts/gcc/linux-x86/arm/arm-eabi-4.6/bin/arm-eabi-ld -EL    -r -o sound/soc/rockchip/snd-soc-rt3224.o sound/soc/rockchip/rk_rt3261.o ; scripts/mod/modpost sound/soc/rockchip/snd-soc-rt3224.o

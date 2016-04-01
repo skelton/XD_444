@@ -1,1 +1,0 @@
-arch/arm/boot/dts/rk3288-tb.dtb: arch/arm/boot/dts/.rk3288-tb.dtb.dts arch/arm/boot/dts/act8846.dtsi arch/arm/boot/dts/rk808.dtsi arch/arm/boot/dts/ricoh619.dtsi arch/arm/boot/dts/rk818.dtsi

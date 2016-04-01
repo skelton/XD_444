@@ -1,1 +1,0 @@
-cmd_drivers/video/backlight/built-in.o :=  ../prebuilts/gcc/linux-x86/arm/arm-eabi-4.6/bin/arm-eabi-ld -EL    -r -o drivers/video/backlight/built-in.o drivers/video/backlight/backlight.o drivers/video/backlight/pwm_bl.o ; scripts/mod/modpost drivers/video/backlight/built-in.o
