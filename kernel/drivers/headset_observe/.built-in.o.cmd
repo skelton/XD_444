@@ -1,0 +1,1 @@
+cmd_drivers/headset_observe/built-in.o :=  ../prebuilts/gcc/linux-x86/arm/arm-eabi-4.6/bin/arm-eabi-ld -EL    -r -o drivers/headset_observe/built-in.o drivers/headset_observe/rockchip_headset_core.o drivers/headset_observe/rk_headset.o drivers/headset_observe/rk_headset_irq_hook_adc.o ; scripts/mod/modpost drivers/headset_observe/built-in.o

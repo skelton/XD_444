@@ -1,0 +1,1 @@
+cmd_drivers/video/rockchip/tve/built-in.o :=  ../prebuilts/gcc/linux-x86/arm/arm-eabi-4.6/bin/arm-eabi-ld -EL    -r -o drivers/video/rockchip/tve/built-in.o drivers/video/rockchip/tve/rk3036/built-in.o ; scripts/mod/modpost drivers/video/rockchip/tve/built-in.o

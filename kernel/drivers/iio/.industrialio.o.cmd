@@ -1,0 +1,1 @@
+cmd_drivers/iio/industrialio.o := ../prebuilts/gcc/linux-x86/arm/arm-eabi-4.6/bin/arm-eabi-ld -EL    -r -o drivers/iio/industrialio.o drivers/iio/industrialio-core.o drivers/iio/industrialio-event.o drivers/iio/inkern.o ; scripts/mod/modpost drivers/iio/industrialio.o

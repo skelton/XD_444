@@ -1,0 +1,1 @@
+cmd_drivers/input/sensors/accel/built-in.o :=  ../prebuilts/gcc/linux-x86/arm/arm-eabi-4.6/bin/arm-eabi-ld -EL    -r -o drivers/input/sensors/accel/built-in.o drivers/input/sensors/accel/mma8452.o drivers/input/sensors/accel/mc3230.o ; scripts/mod/modpost drivers/input/sensors/accel/built-in.o

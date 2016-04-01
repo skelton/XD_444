@@ -1,0 +1,1 @@
+cmd_sound/soc/rockchip/snd-soc-rk312x.o := ../prebuilts/gcc/linux-x86/arm/arm-eabi-4.6/bin/arm-eabi-ld -EL    -r -o sound/soc/rockchip/snd-soc-rk312x.o sound/soc/rockchip/rk_rk312x.o ; scripts/mod/modpost sound/soc/rockchip/snd-soc-rk312x.o

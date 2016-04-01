@@ -1,0 +1,1 @@
+cmd_drivers/usb/misc/built-in.o :=  ../prebuilts/gcc/linux-x86/arm/arm-eabi-4.6/bin/arm-eabi-ld -EL    -r -o drivers/usb/misc/built-in.o drivers/usb/misc/trancevibrator.o ; scripts/mod/modpost drivers/usb/misc/built-in.o

@@ -1,0 +1,1 @@
+cmd_drivers/usb/dwc_otg_310/built-in.o :=  ../prebuilts/gcc/linux-x86/arm/arm-eabi-4.6/bin/arm-eabi-ld -EL    -r -o drivers/usb/dwc_otg_310/built-in.o drivers/usb/dwc_otg_310/dwc_otg.o ; scripts/mod/modpost drivers/usb/dwc_otg_310/built-in.o

@@ -1,0 +1,1 @@
+cmd_drivers/input/sensors/lsensor/built-in.o :=  ../prebuilts/gcc/linux-x86/arm/arm-eabi-4.6/bin/arm-eabi-ld -EL    -r -o drivers/input/sensors/lsensor/built-in.o drivers/input/sensors/lsensor/cm3217.o drivers/input/sensors/lsensor/cm3218.o ; scripts/mod/modpost drivers/input/sensors/lsensor/built-in.o

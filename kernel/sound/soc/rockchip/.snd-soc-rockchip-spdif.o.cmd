@@ -1,0 +1,1 @@
+cmd_sound/soc/rockchip/snd-soc-rockchip-spdif.o := ../prebuilts/gcc/linux-x86/arm/arm-eabi-4.6/bin/arm-eabi-ld -EL    -r -o sound/soc/rockchip/snd-soc-rockchip-spdif.o sound/soc/rockchip/rk_spdif.o ; scripts/mod/modpost sound/soc/rockchip/snd-soc-rockchip-spdif.o
