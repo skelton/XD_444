@@ -99,9 +99,11 @@
 //#endif
 
 //default mode, 0 is PS3 mode, 1 is XBOX mode
-int ioctl_xbox = 1;
+int ioctl_xbox = 0;
 //default exchange, 0 is exchange, 1 is default 
 int ioctl_exchange = 1;
+
+int cf_mode = 0;
 
 //1, circle_x, circle_y, r, ax, ay, bx, by, xx, xy, yx, yy, lx, ly, rx, ry, l2x, l2y, r2x, r2y, view，view_x, view_y, leftx, lefty, rightx, righty, upx, upy, downx, downy l3x, l3y, r3x, r3y, selectx, selecty, startx, starty
 //2, circle_x, circle_y, r, ax, ay, bx, by, xx, xy, yx, yy, lx, ly, rx, ry, l2x, l2y, r2x, r2y, view_x，view_y, view_r, leftx, lefty, rightx, righty, upx, upy, downx, downy l3x, l3y, r3x, r3y, selectx, selecty, startx, starty
@@ -129,6 +131,7 @@ struct kp {
 	struct input_dev *input_keytouch;
 	struct input_dev *ps3_input_joystick;
 	struct input_dev *xbox_input_joystick;
+	struct input_dev *cf_input_joystick;
 	struct work_struct work_update;
 	struct timer_list timer;
 	struct work_struct work_input_mode;
@@ -229,8 +232,10 @@ static struct game_key gamekeys[] = {
 
 int ps3_input_device();
 int xbox_input_device();
+int cf_input_device();
 int ps3_uninput_device();
 int xbox_uninput_device();
+int cf_uninput_device();
 
 static void gpio_init(struct kp *kp, struct device_node *np)
 {
@@ -312,6 +317,9 @@ static void js_report(struct kp *kp, int value, int id)
 {
 	struct input_dev *input_joystick;
 	struct joystick_axis *axis;
+
+	if (cf_mode)
+		return;
 	
 	/**********************************************************/
 	//PS3 and XBOX switch
@@ -834,25 +842,45 @@ static void update_work_func(struct work_struct *work)
 	struct input_dev *input_joystick;
 	
 	if (ioctl_xbox != kp->input_mode_old){
-		if (ioctl_xbox) {
+		if (ioctl_xbox == 1) {
 			xbox_input_device(kp);
 			input_joystick = kp->xbox_input_joystick;
 			kp->xbox = 1;
-			ps3_uninput_device(kp);
-		} else {
+			if (kp->input_mode_old == 0)
+				ps3_uninput_device(kp);
+			else if (kp->input_mode_old == 2)
+				cf_uninput_device(kp);
+			cf_mode = 0;
+		} else if (ioctl_xbox == 0) {
 			ps3_input_device(kp);
 			input_joystick = kp->ps3_input_joystick;
 			kp->xbox = 0;
-			xbox_uninput_device(kp);
+                        if (kp->input_mode_old == 1)
+                                xbox_uninput_device(kp);
+                        else if (kp->input_mode_old == 2)
+                                cf_uninput_device(kp);
+			cf_mode = 0;
+		} else if (ioctl_xbox == 2) {
+			cf_mode = 1;
+			cf_input_device(kp);
+			input_joystick = kp->cf_input_joystick;
+			if (kp->input_mode_old == 1)
+				xbox_uninput_device(kp);
+			else if (kp->input_mode_old == 0)
+				ps3_uninput_device(kp);
+			kp->xbox = 2;
 		}
 		kp->input_mode_old = kp->xbox;
 	} else {
-		if (ioctl_xbox) {
+		if (ioctl_xbox == 1) {
 			input_joystick = kp->xbox_input_joystick;
 			kp->xbox = 1;
-		} else {
+		} else if (ioctl_xbox == 0){
 			input_joystick = kp->ps3_input_joystick;
 			kp->xbox = 0;
+		}else if (ioctl_xbox == 2){
+			input_joystick = kp->cf_input_joystick;
+			kp->xbox = 2;
 		}
 	}
 
@@ -893,9 +921,9 @@ static void update_work_func(struct work_struct *work)
 	}
 	//report keys
 	if (key_param[0] == 0) {
-		if (kp->xbox)
+		if (kp->xbox == 1)
 			xbox_report_joystick_key(kp);
-		else
+		else if (kp->xbox == 0)
 			ps3_report_joystick_key(kp);
 		input_sync(input_joystick);
 
@@ -1171,6 +1199,38 @@ int ps3_input_device(struct kp *kp)
 	return 0;
 }
 
+int cf_input_device(struct kp *kp)
+{
+        int i, ret;
+
+        //register joystick
+        kp->cf_input_joystick = input_allocate_device();
+        if (!kp->cf_input_joystick) {
+                printk("---------- allocate cf_input_joystick fail ------------\n");
+                kfree(kp);
+                input_free_device(kp->cf_input_joystick);
+                return -ENOMEM;
+        }
+
+        kp->cf_input_joystick->name = "cf_touch";
+        kp->cf_input_joystick->id.vendor = 0x0001;
+        kp->cf_input_joystick->id.product = 0x0001;
+        kp->cf_input_joystick->id.bustype = BUS_USB;
+
+        kp->cf_input_joystick->id.version = 0x0100;
+
+        ret = input_register_device(kp->cf_input_joystick);
+        if (ret < 0) {
+                printk(KERN_ERR "register cf_input_joystick device fail\n");
+                kfree(kp);
+                input_free_device(kp->cf_input_joystick);
+                return -EINVAL;
+        }
+
+        return 0;
+}
+
+
 int xbox_input_device(struct kp *kp)
 {
 	int i, ret;
@@ -1286,6 +1346,13 @@ int ps3_uninput_device(struct kp *kp)
 	input_unregister_device(kp->ps3_input_joystick);
 	input_free_device(kp->ps3_input_joystick);
 }
+
+int cf_uninput_device(struct kp *kp)
+{
+        input_unregister_device(kp->cf_input_joystick);
+        input_free_device(kp->cf_input_joystick);
+}
+
 
 int xbox_uninput_device(struct kp *kp)
 {
@@ -1411,9 +1478,11 @@ static int adc_remove(struct platform_device *pdev)
 	input_unregister_device(kp->input_keytouch);
 	input_unregister_device(kp->ps3_input_joystick);
 	input_unregister_device(kp->xbox_input_joystick);
+	input_unregister_device(kp->cf_input_joystick);
 	input_free_device(kp->input_keytouch);
 	input_free_device(kp->ps3_input_joystick);
 	input_free_device(kp->xbox_input_joystick);
+	input_free_device(kp->cf_input_joystick);
 
 	unregister_chrdev(kp->config_major,kp->config_name);
 	if(kp->config_class)
@@ -1457,7 +1526,7 @@ static void __exit adc_exit(void)
 late_initcall(adc_init);
 module_exit(adc_exit);
 
-MODULE_AUTHOR("Samty");
+MODULE_AUTHOR("Samty/Skelton");
 MODULE_DESCRIPTION("ADC Joystick Driver");
 MODULE_LICENSE("GPL");
 
